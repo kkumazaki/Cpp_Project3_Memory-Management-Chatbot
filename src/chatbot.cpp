@@ -12,7 +12,8 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = nullptr;
+    //_image = nullptr;
+    _image = NULL; // Attention: wxWidgets used NULL and not nullptr
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -30,6 +31,7 @@ ChatBot::ChatBot(std::string filename)
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
+// (1) Destructor
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
@@ -44,6 +46,71 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+
+// (2) Copy Constructor to avoid segmentation fauld by unnecessary extra "delete"
+ChatBot::ChatBot(const ChatBot &source)
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    _image = source._image;
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+}
+
+// (3) Copy Assignment Operator
+ChatBot &ChatBot::operator=(const ChatBot &source){
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+    if (this == &source)
+        return *this;
+
+    _image = source._image;
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    return *this;
+}
+
+// (4) Move Constructor
+ChatBot::ChatBot(ChatBot &&source)
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    _image = source._image;
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+
+    // Task 5: Moving the ChatBot
+    _chatLogic->SetChatbotHandle(this);
+    
+    source._image = NULL;
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+}
+
+// (5) Move Assignment Operator
+ChatBot &ChatBot::operator=(ChatBot &&source){
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
+    if (this == &source)
+        return *this;
+
+    _image = source._image;
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    
+    // Task 5: Moving the ChatBot
+    _chatLogic->SetChatbotHandle(this);
+
+    source._image = NULL;
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+
+    return *this;
+}
+
+
 
 ////
 //// EOF STUDENT CODE

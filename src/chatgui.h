@@ -3,6 +3,8 @@
 
 #include <wx/wx.h>
 
+#include <memory> // Task 1: create unique pointer
+
 class ChatLogic; // forward declaration
 
 // middle part of the window containing the dialog between user and chatbot
@@ -16,7 +18,9 @@ private:
     //// STUDENT CODE
     ////
 
-    ChatLogic *_chatLogic;
+    //ChatLogic *_chatLogic;
+    //std::unique_ptr<ChatLogic> _chatLogic(new ChatLogic()); // Task 1: create unique pointer
+    std::unique_ptr<ChatLogic> _chatLogic = std::make_unique<ChatLogic>(); // Task 1: create unique pointer
 
     ////
     //// EOF STUDENT CODE
@@ -27,7 +31,8 @@ public:
     ~ChatBotPanelDialog();
 
     // getter / setter
-    ChatLogic *GetChatLogicHandle() { return _chatLogic; }
+    //ChatLogic *GetChatLogicHandle() { return _chatLogic; }
+    ChatLogic *GetChatLogicHandle() { return _chatLogic.get(); }// Task 1: from raw pointer to smart pointer
 
     // events
     void paintEvent(wxPaintEvent &evt);

@@ -17,8 +17,9 @@ private:
     ////
 
     // data handles (owned)
-    std::vector<GraphNode *> _nodes;
-    std::vector<GraphEdge *> _edges;
+    //std::vector<GraphNode *> _nodes;
+    std::vector<std::unique_ptr<GraphNode>> _nodes; // Task 2: create a smart pointer
+    //std::vector<GraphEdge *> _edges; // Task 3: create a smart pointer in cpp, so remove here.
 
     ////
     //// EOF STUDENT CODE
