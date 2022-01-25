@@ -51,7 +51,8 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &source)
 {
     std::cout << "ChatBot Copy Constructor" << std::endl;
-    _image = source._image;
+    //_image = source._image;
+    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
@@ -63,7 +64,8 @@ ChatBot &ChatBot::operator=(const ChatBot &source){
     if (this == &source)
         return *this;
 
-    _image = source._image;
+    //_image = source._image;
+    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
@@ -74,7 +76,8 @@ ChatBot &ChatBot::operator=(const ChatBot &source){
 ChatBot::ChatBot(ChatBot &&source)
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
-    _image = source._image;
+    //_image = source._image;
+    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
@@ -94,7 +97,8 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     if (this == &source)
         return *this;
 
-    _image = source._image;
+    //_image = source._image;
+    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
