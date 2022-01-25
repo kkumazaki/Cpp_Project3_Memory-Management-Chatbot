@@ -76,8 +76,8 @@ ChatBot &ChatBot::operator=(const ChatBot &source){
 ChatBot::ChatBot(ChatBot &&source)
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
-    //_image = source._image;
-    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
+    _image = source._image; // Feedback#2: deep copy is wrong in move constructor
+    //_image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
@@ -97,8 +97,8 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     if (this == &source)
         return *this;
 
-    //_image = source._image;
-    _image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
+    _image = source._image; // Feedback#2: deep copy is wrong in move operator
+    //_image = new wxBitmap(*source._image);  // Feedback#1: deep copy instead of shallow copy
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
